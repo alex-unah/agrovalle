@@ -12,7 +12,8 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        //
+        $empleados = Empleado::latest()->paginate(10);
+        return view('empleados.index', compact('empleados'));
     }
 
     /**
@@ -20,7 +21,7 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        //
+        return view('insumos.create');
     }
 
     /**
@@ -28,7 +29,21 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'identidad' => 'required|string|min:13|max:13|unique:empleados,identidad',
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+            'correo' => 'required|string|unique:empleados,correo',
+            'cargo' => 'required|string',
+            'salario' => 'required|numeric',
+            'fecha_ing' => 'required|date',
+            'estado' => 'required|boolean'
+        ]);
+
+        Empleado::create($request->all());
+
+        return redirect()->route('empleados.index')
+                         ->with('success', '¡Empleado registrado exitosamente!');
     }
 
     /**
@@ -44,7 +59,7 @@ class EmpleadoController extends Controller
      */
     public function edit(Empleado $empleado)
     {
-        //
+        return view('empleados.edit', compact('empleado'));
     }
 
     /**
@@ -52,7 +67,21 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, Empleado $empleado)
     {
-        //
+        $request->validate([
+            'identidad' => 'required|string|min:13|max:13|unique:empleados,identidad'. $empleado->id,
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+            'correo' => 'required|string|unique:empleados,correo'. $empleado->id,
+            'cargo' => 'required|string',
+            'salario' => 'required|numeric',
+            'fecha_ing' => 'required|date',
+            'estado' => 'required|boolean'
+        ]);
+
+        $empleado->update($request->all());
+
+        return redirect()->route('empleados.index')
+                         ->with('success', '¡Empleado actualizado correctamente!');
     }
 
     /**
@@ -60,6 +89,9 @@ class EmpleadoController extends Controller
      */
     public function destroy(Empleado $empleado)
     {
-        //
+        $empleado->delete();
+
+        return redirect()->route('empleados.index')
+                         ->with('success', '¡Empleado eliminado del inventario!');
     }
 }

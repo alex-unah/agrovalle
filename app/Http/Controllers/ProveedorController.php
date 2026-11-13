@@ -12,7 +12,8 @@ class ProveedorController extends Controller
      */
     public function index()
     {
-        //
+        $proveedores = Proveedor::latest()->paginate(10);
+        return view('proveedores.index', compact('proveedores'));
     }
 
     /**
@@ -20,7 +21,7 @@ class ProveedorController extends Controller
      */
     public function create()
     {
-        //
+        return view('proveedores.create');
     }
 
     /**
@@ -28,7 +29,22 @@ class ProveedorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'rtn' => 'required|string|min:14|max:14|unique:proveedores,rtn',
+            'empresa' => 'required|string|max:255',
+            'contacto' => 'required|string|max:255',
+            'telefono' => 'required|integer|min:8|max:8|',
+            'categoria' => 'required|string|max:255',
+            'lim_credito' => 'required|numeric',
+            'dias_credito' => 'required|integer',
+            'estado' => 'required|boolean',
+            'fecha_reg' => 'required|date'
+        ]);
+
+        Proveedor::create($request->all());
+
+        return redirect()->route('proveedores.index')
+                         ->with('success', '¡Proveedor registrado exitosamente!');
     }
 
     /**
@@ -44,7 +60,7 @@ class ProveedorController extends Controller
      */
     public function edit(Proveedor $proveedor)
     {
-        //
+        return view('proveedores.edit', compact('proveedor'));
     }
 
     /**
@@ -52,7 +68,22 @@ class ProveedorController extends Controller
      */
     public function update(Request $request, Proveedor $proveedor)
     {
-        //
+         $request->validate([
+            'rtn' => 'required|string|min:14|max:14|unique:proveedores,rtn'. $proveedor->id,
+            'empresa' => 'required|string|max:255',
+            'contacto' => 'required|string|max:255',
+            'telefono' => 'required|integer|min:8|max:8|',
+            'categoria' => 'required|string|max:255',
+            'lim_credito' => 'required|numeric',
+            'dias_credito' => 'required|integer',
+            'estado' => 'required|boolean',
+            'fecha_reg' => 'required|date'
+        ]);
+
+        $proveedor->update($request->all());
+
+        return redirect()->route('proveedores.index')
+                         ->with('success', '¡Proveedor actualizado correctamente!');
     }
 
     /**
@@ -60,6 +91,9 @@ class ProveedorController extends Controller
      */
     public function destroy(Proveedor $proveedor)
     {
-        //
+        $proveedor->delete();
+
+        return redirect()->route('proveedores.index')
+                         ->with('success', '¡Proveedor eliminado del inventario!');
     }
 }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('codigo')->unique();
             $table->string('nombre');
-            $table->string('cuenta');
+            $table->string('categoria');
             $table->decimal('precio',10,2);
             $table->decimal('costo',10,2);
             $table->integer('inventario');

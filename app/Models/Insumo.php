@@ -9,7 +9,7 @@ class Insumo extends Model
     protected $fillable = [
         'codigo',
         'nombre',
-        'cuenta',
+        'categoria',
         'precio',
         'costo',
         'inventario',
