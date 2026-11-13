@@ -28,7 +28,7 @@
             Agrovalle Honduras
         </a>
         <div class="">
-            <div class="text-light">Usuario: @yield('usuario', 'Usuario no autenticado')</div>
+            <div class="text-light">Usuario: {{ Auth::user()->name }} </div>
         </div>
         <button class="btn btn-link btn-sm me-4 me-lg-0 text-danger" id="btnLogout">
             Cerrar Sesión
@@ -83,6 +83,8 @@
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small text-muted">
+                        <div class="small">Conectado como:</div>
+                        <span class="text-white fw-bold">{{ Auth::user()->email }}</span>
                         <div>© 2026 Agrovalle Honduras - Sistema de Control y Gestión</div>
                         <div>ISC-305 Programación Web | UNAH III PAC 2026</div>
                     </div>

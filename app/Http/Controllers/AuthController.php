@@ -10,7 +10,7 @@ class AuthController extends Controller{
     public function showLogin(){
             
         if (Auth::check()) {
-            return redirect()->route('dashboard.index');
+            return redirect()->route('dashboard');
         }
 
         return view('auth.login');
@@ -25,7 +25,7 @@ class AuthController extends Controller{
         
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended(route('dashboard.index'))
+            return redirect()->intended(route('dashboard'))
             ->with('success', '¡Bienvenido al sistema, ' . Auth::user()->name . '!');
         }
 
@@ -38,7 +38,7 @@ class AuthController extends Controller{
     public function showRegister(){
             
         if (Auth::check()) {
-            return redirect()->route('dashboard.index');
+            return redirect()->route('dashboard');
         }
         return view('auth.register');
     }
@@ -59,7 +59,7 @@ class AuthController extends Controller{
 
         Auth::login($user);
 
-        return redirect()->route('dashboard.index')
+        return redirect()->route('dashboard')
         ->with('success', '¡Cuenta creada con éxito! Bienvenido a Ferretería La Bendición.');
     }
 

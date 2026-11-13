@@ -19,7 +19,7 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header bg-dark text-white text-center py-4">
                                         <h3 class="font-weight-light my-2">
-                                            <i class="fas fa-hammer text-warning me-2"></i>Agrovalle Honduras
+                                            <i class="fa-solid fa-seedling text-warning me-2"></i>Agrovalle Honduras
                                         </h3>
                                         <small class="text-muted">Modulo de Autenticación</small>
                                     </div>
